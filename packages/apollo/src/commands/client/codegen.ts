@@ -167,9 +167,9 @@ export default class Generate extends ClientCommand {
                       .map(
                         doc =>
                           `${doc.source.name}:${
-                            doc.source.locationOffset.column
-                          }:${
                             doc.source.locationOffset.line
+                          }:${
+                            doc.source.locationOffset.column
                           }:\n${doc.syntaxErrors
                             .map(error => `  ${error.message}`)
                             .join("\n")}`
