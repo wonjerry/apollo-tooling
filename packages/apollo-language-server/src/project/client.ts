@@ -49,6 +49,7 @@ import {
   diagnosticsFromError
 } from "../diagnostics";
 import URI from "vscode-uri";
+import { GraphQLDocument } from "../document";
 
 function schemaHasASTNodes(schema: GraphQLSchema): boolean {
   const queryType = schema && schema.getQueryType();
@@ -428,6 +429,10 @@ export class GraphQLClientProject extends GraphQLProject {
       }
     }
     return operations;
+  }
+
+  get documentsWithErrors() {
+    return this.documents.filter(document => document.syntaxErrors.length > 0);
   }
 
   get mergedOperationsAndFragments(): {

@@ -158,6 +158,28 @@ export default class Generate extends ClientCommand {
 
         return [
           {
+            title: "Validating query documents",
+            task: () => {
+              if (this.project.documentsWithErrors.length > 0) {
+                throw new Error(
+                  "The following documents have errors:\n" +
+                    this.project.documentsWithErrors
+                      .map(
+                        doc =>
+                          `${doc.source.name}:${
+                            doc.source.locationOffset.column
+                          }:${
+                            doc.source.locationOffset.line
+                          }:\n${doc.syntaxErrors
+                            .map(error => `  ${error.message}`)
+                            .join("\n")}`
+                      )
+                      .join("\n")
+                );
+              }
+            }
+          },
+          {
             title: "Generating query files",
             task: async (ctx, task) => {
               task.title = `Generating query files with '${inferredTarget}' target`;
